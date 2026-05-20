@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alma Digital — Stickers & Personalizados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f8f6f0;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --gold-dark: #8b6914;
+    --gray: #1a1a1a;
+    --gray-mid: #2e2e2e;
+    --gray-light: #5a5a5a;
+    --border: rgba(201,168,76,0.2);
+    --border-strong: rgba(201,168,76,0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSOR */
+  .cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s; }
+  .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(201,168,76,0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all 0.15s ease; }
+  .cursor-ring.hovered { width: 48px; height: 48px; border-color: var(--gold); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 48px;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .logo span { color: var(--gold); }
+
+  .nav-links { display: flex; gap: 40px; align-items: center; }
+  .nav-links a {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gray-light); text-decoration: none;
+    transition: color 0.3s; cursor: none;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .cart-btn {
+    position: relative; background: none; border: 1px solid var(--border-strong);
+    color: var(--gold); padding: 10px 20px; font-family: 'Montserrat', sans-serif;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    cursor: none; transition: all 0.3s;
+  }
+  .cart-btn:hover { background: var(--gold); color: var(--black); }
+  .cart-count {
+    position: absolute; top: -8px; right: -8px;
+    background: var(--gold); color: var(--black);
+    width: 18px; height: 18px; border-radius: 50%;
+    font-size: 9px; display: flex; align-items: center; justify-content: center;
+    font-weight: 500;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 0 48px; position: relative; overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.03;
+    background-image: linear-gradient(var(--gold) 1px, transparent 1px), linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content { position: relative; max-width: 700px; }
+
+  .hero-eyebrow {
+    font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 32px; display: flex; align-items: center; gap: 16px;
+  }
+  .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(60px, 8vw, 110px);
+    font-weight: 300; line-height: 0.9;
+    letter-spacing: -2px; margin-bottom: 32px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+
+  .hero-sub {
+    font-size: 12px; letter-spacing: 2px; color: var(--gray-light);
+    line-height: 2; max-width: 400px; margin-bottom: 48px;
+  }
+
+  .hero-cta {
+    display: inline-flex; gap: 20px; align-items: center;
+  }
+  .btn-primary {
+    background: var(--gold); color: var(--black);
+    padding: 16px 40px; font-family: 'Montserrat', sans-serif;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    border: none; cursor: none; transition: all 0.3s; font-weight: 500;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-ghost {
+    color: var(--white); padding: 16px 40px;
+    font-family: 'Montserrat', sans-serif; font-size: 10px;
+    letter-spacing: 3px; text-transform: uppercase; border: 1px solid var(--border-strong);
+    cursor: none; transition: all 0.3s; background: none; text-decoration: none; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 48px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray-light);
+  }
+  .scroll-line { width: 40px; height: 1px; background: var(--gray-light); animation: scrollPulse 2s infinite; }
+  @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  /* SECTION */
+  section { padding: 120px 48px; }
+
+  .section-header { margin-bottom: 80px; }
+  .section-eyebrow {
+    font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 16px;
+  }
+  .section-eyebrow::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px); font-weight: 300; letter-spacing: -1px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* PRODUCTS GRID */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2px;
+  }
+
+  .product-card {
+    background: var(--gray); position: relative; overflow: hidden;
+    transition: transform 0.4s cubic-bezier(.23,1,.32,1);
+  }
+  .product-card:hover { transform: translateY(-4px); z-index: 2; }
+
+  .product-img {
+    width: 100%; aspect-ratio: 1;
+    background: var(--gray-mid);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+  .product-card:hover .product-img img { transform: scale(1.05); }
+
+  .product-img-placeholder {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%; height: 100%; gap: 12px;
+    color: var(--gray-light);
+  }
+  .product-img-placeholder svg { opacity: 0.3; }
+  .product-img-placeholder span { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.4; }
+
+  .product-overlay {
+    position: absolute; inset: 0; background: rgba(10,10,10,0.7);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .product-card:hover .product-overlay { opacity: 1; }
+
+  .product-info { padding: 20px 20px 24px; }
+  .product-cat { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .product-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; margin-bottom: 4px; }
+  .product-desc { font-size: 10px; color: var(--gray-light); line-height: 1.7; margin-bottom: 16px; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); }
+  .add-to-cart {
+    background: none; border: 1px solid var(--border-strong); color: var(--gold);
+    padding: 8px 16px; font-family: 'Montserrat', sans-serif;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    cursor: none; transition: all 0.3s;
+  }
+  .add-to-cart:hover { background: var(--gold); color: var(--black); }
+
+  .product-badge {
+    position: absolute; top: 16px; left: 16px; z-index: 3;
+    background: var(--gold); color: var(--black);
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 10px; font-weight: 500;
+  }
+
+  /* PERSONALIZADO */
+  .custom-section {
+    background: var(--gray);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .custom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+
+  .custom-form { display: flex; flex-direction: column; gap: 20px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+
+  .form-input, .form-select, .form-textarea {
+    background: var(--black); border: 1px solid var(--border);
+    color: var(--white); padding: 14px 16px;
+    font-family: 'Montserrat', sans-serif; font-size: 12px;
+    outline: none; transition: border-color 0.3s; cursor: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-select { appearance: none; }
+  .form-textarea { resize: vertical; min-height: 120px; }
+
+  .upload-area {
+    border: 1px dashed var(--border-strong); padding: 40px;
+    text-align: center; cursor: none; transition: all 0.3s;
+    background: rgba(201,168,76,0.02);
+  }
+  .upload-area:hover, .upload-area.drag-over {
+    border-color: var(--gold); background: rgba(201,168,76,0.05);
+  }
+  .upload-area input { display: none; }
+  .upload-icon { color: var(--gold); margin-bottom: 12px; }
+  .upload-text { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-light); margin-bottom: 6px; }
+  .upload-sub { font-size: 10px; color: var(--gray-light); opacity: 0.5; }
+  .upload-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; justify-content: center; }
+  .upload-thumb { width: 64px; height: 64px; object-fit: cover; border: 1px solid var(--border); }
+
+  .custom-visual { position: relative; }
+  .custom-visual-inner {
+    aspect-ratio: 0.9; background: var(--gray-mid);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .custom-visual-inner::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(201,168,76,0.05));
+  }
+  .custom-visual-deco {
+    position: absolute; top: 20px; right: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px; font-weight: 300; color: rgba(201,168,76,0.1);
+    line-height: 1; pointer-events: none; user-select: none;
+  }
+  .custom-visual-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; color: var(--gray-light);
+    text-align: center; padding: 40px;
+  }
+  .custom-visual-text em { color: var(--gold); font-style: italic; display: block; font-size: 40px; }
+
+  /* CART SIDEBAR */
+  .cart-overlay {
+    position: fixed; inset: 0; background: rgba(10,10,10,0.7);
+    z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+  .cart-sidebar {
+    position: fixed; right: 0; top: 0; bottom: 0; width: 440px;
+    background: var(--gray); z-index: 201;
+    transform: translateX(100%); transition: transform 0.4s cubic-bezier(.23,1,.32,1);
+    display: flex; flex-direction: column;
+    border-left: 1px solid var(--border);
+  }
+  .cart-sidebar.open { transform: translateX(0); }
+
+  .cart-header {
+    padding: 32px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .cart-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; }
+  .cart-close {
+    background: none; border: none; color: var(--gray-light);
+    font-size: 20px; cursor: none; transition: color 0.3s;
+  }
+  .cart-close:hover { color: var(--gold); }
+
+  .cart-items { flex: 1; overflow-y: auto; padding: 24px 32px; }
+  .cart-empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 200px; gap: 16px; color: var(--gray-light);
+  }
+  .cart-empty-icon { font-size: 40px; opacity: 0.3; }
+  .cart-empty-text { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+
+  .cart-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .cart-item-img {
+    width: 72px; height: 72px; background: var(--gray-mid);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; margin-bottom: 4px; }
+  .cart-item-variant { font-size: 10px; color: var(--gray-light); margin-bottom: 8px; }
+  .cart-item-price { font-size: 12px; color: var(--gold); }
+  .cart-item-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .qty-btn {
+    width: 24px; height: 24px; background: var(--gray-mid); border: none;
+    color: var(--white); cursor: none; font-size: 14px;
+    display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+  }
+  .qty-btn:hover { background: var(--gold); color: var(--black); }
+  .qty-val { font-size: 12px; width: 24px; text-align: center; }
+  .remove-item { background: none; border: none; color: var(--gray-light); cursor: none; font-size: 16px; margin-left: auto; transition: color 0.2s; }
+  .remove-item:hover { color: #e57373; }
+
+  .cart-footer { padding: 24px 32px; border-top: 1px solid var(--border); }
+  .cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  .cart-total-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray-light); }
+  .cart-total-val { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--gold); }
+  .whatsapp-btn {
+    width: 100%; padding: 18px; background: #25D366; color: var(--black);
+    border: none; font-family: 'Montserrat', sans-serif;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    cursor: none; font-weight: 500; transition: all 0.3s;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .whatsapp-btn:hover { background: #20bf5b; transform: translateY(-2px); }
+
+  /* PRODUCT MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(10,10,10,0.9);
+    z-index: 300; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s; display: flex; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--gray); width: 90%; max-width: 800px;
+    max-height: 90vh; overflow-y: auto;
+    transform: translateY(20px); transition: transform 0.4s cubic-bezier(.23,1,.32,1);
+    border: 1px solid var(--border);
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .modal-img { aspect-ratio: 1; background: var(--gray-mid); position: relative; overflow: hidden; }
+  .modal-img img { width: 100%; height: 100%; object-fit: cover; }
+  .modal-body { padding: 40px; }
+  .modal-cat { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .modal-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; margin-bottom: 12px; }
+  .modal-price { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--gold); margin-bottom: 24px; }
+  .modal-desc { font-size: 12px; color: var(--gray-light); line-height: 2; margin-bottom: 32px; }
+  .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--white); font-size: 24px; cursor: none; z-index: 1; }
+
+  /* ADMIN PANEL */
+  .admin-panel {
+    position: fixed; inset: 0; background: var(--black);
+    z-index: 500; overflow-y: auto;
+    display: none;
+  }
+  .admin-panel.open { display: block; }
+
+  .admin-nav {
+    padding: 24px 48px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; background: var(--black); z-index: 10;
+  }
+  .admin-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; letter-spacing: 4px; text-transform: uppercase; }
+  .admin-logo span { color: var(--gold); }
+
+  .admin-content { padding: 48px; }
+
+  .admin-tabs { display: flex; gap: 0; margin-bottom: 48px; border-bottom: 1px solid var(--border); }
+  .admin-tab {
+    padding: 12px 32px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    background: none; border: none; color: var(--gray-light); cursor: none;
+    transition: all 0.3s; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .admin-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .admin-tab:hover { color: var(--white); }
+
+  .admin-tab-content { display: none; }
+  .admin-tab-content.active { display: block; }
+
+  .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+
+  .admin-card {
+    background: var(--gray); border: 1px solid var(--border); padding: 24px;
+  }
+  .admin-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .admin-card-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; }
+  .admin-card-actions { display: flex; gap: 8px; }
+
+  .admin-input {
+    width: 100%; background: var(--black); border: 1px solid var(--border);
+    color: var(--white); padding: 10px 12px; font-family: 'Montserrat', sans-serif;
+    font-size: 12px; outline: none; transition: border-color 0.3s; margin-bottom: 12px;
+    cursor: text;
+  }
+  .admin-input:focus { border-color: var(--gold); }
+
+  .admin-btn-sm {
+    padding: 8px 16px; font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    cursor: none; font-family: 'Montserrat', sans-serif; transition: all 0.3s; border: none;
+  }
+  .admin-btn-gold { background: var(--gold); color: var(--black); }
+  .admin-btn-gold:hover { background: var(--gold-light); }
+  .admin-btn-outline { background: none; border: 1px solid var(--border-strong); color: var(--gold); }
+  .admin-btn-outline:hover { background: var(--gold); color: var(--black); }
+  .admin-btn-danger { background: none; border: 1px solid rgba(229,115,115,0.3); color: #e57373; }
+  .admin-btn-danger:hover { background: #e57373; color: var(--white); }
+
+  .admin-img-upload {
+    width: 100%; aspect-ratio: 1; background: var(--gray-mid); border: 1px dashed var(--border);
+    display: flex; align-items: center; justify-content: center; cursor: none;
+    overflow: hidden; margin-bottom: 12px; transition: border-color 0.3s;
+  }
+  .admin-img-upload:hover { border-color: var(--gold); }
+  .admin-img-upload img { width: 100%; height: 100%; object-fit: cover; }
+  .admin-img-upload input { display: none; }
+
+  .admin-add-product {
+    background: none; border: 2px dashed var(--border);
+    width: 100%; padding: 48px; text-align: center;
+    cursor: none; transition: all 0.3s; color: var(--gray-light);
+  }
+  .admin-add-product:hover { border-color: var(--gold); color: var(--gold); }
+  .admin-add-icon { font-size: 32px; margin-bottom: 12px; }
+  .admin-add-text { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+
+  /* LOGIN */
+  .login-overlay {
+    position: fixed; inset: 0; background: var(--black);
+    z-index: 400; display: flex; align-items: center; justify-content: center;
+  }
+
+  .login-box {
+    width: 400px; padding: 60px;
+    border: 1px solid var(--border);
+  }
+  .login-logo { font-family: 'Cormorant Garamond', serif; font-size: 28px; letter-spacing: 6px; text-transform: uppercase; text-align: center; margin-bottom: 40px; }
+  .login-logo span { color: var(--gold); }
+  .login-title { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; text-align: center; color: var(--gray-light); margin-bottom: 40px; }
+  .login-error { font-size: 11px; color: #e57373; text-align: center; margin-top: 12px; display: none; }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray); padding: 80px 48px 40px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  .footer-brand .logo { font-size: 18px; margin-bottom: 20px; display: block; }
+  .footer-tagline { font-size: 11px; color: var(--gray-light); line-height: 2; max-width: 300px; }
+  .footer-col-title { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .footer-links { display: flex; flex-direction: column; gap: 12px; }
+  .footer-link { font-size: 12px; color: var(--gray-light); text-decoration: none; transition: color 0.3s; cursor: none; }
+  .footer-link:hover { color: var(--gold); }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 40px; border-top: 1px solid var(--border); }
+  .footer-copy { font-size: 10px; color: var(--gray-light); letter-spacing: 2px; }
+
+  /* ADMIN TRIGGER */
+  .admin-trigger {
+    position: fixed; bottom: 32px; right: 32px; z-index: 99;
+    background: var(--gray); border: 1px solid var(--border);
+    color: var(--gray-light); padding: 12px; cursor: none;
+    transition: all 0.3s; font-size: 16px;
+  }
+  .admin-trigger:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* NOTIFICATIONS */
+  .toast {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--gray); border: 1px solid var(--border-strong);
+    padding: 16px 28px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); opacity: 0; transition: all 0.4s; z-index: 999; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(30px) } to { opacity:1; transform:translateY(0) } }
+  .fade-in { animation: fadeInUp 0.8s ease forwards; }
+  .fade-in-1 { animation-delay: 0.1s; opacity: 0; }
+  .fade-in-2 { animation-delay: 0.25s; opacity: 0; }
+  .fade-in-3 { animation-delay: 0.4s; opacity: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 0 24px; }
+    .hero-scroll { left: 24px; }
+    .custom-grid { grid-template-columns: 1fr; }
+    .custom-visual { display: none; }
+    .modal-grid { grid-template-columns: 1fr; }
+    .modal-img { display: none; }
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .cart-sidebar { width: 100%; }
+    .admin-content { padding: 24px; }
+    .admin-nav { padding: 20px 24px; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+
+  /* SCROLL */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+
+  .gold-line {
+    display: block; width: 60px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 24px 0;
+  }
+
+  .stat-row { display: flex; gap: 60px; margin: 48px 0; }
+  .stat { }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--gold); }
+  .stat-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray-light); }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Alma <span>Digital</span></div>
+  <div class="nav-links">
+    <a href="#productos" onclick="return scrollTo('productos')">Catálogo</a>
+    <a href="#personalizados" onclick="return scrollTo('personalizados')">Personalizados</a>
+    <a href="#nosotros" onclick="return scrollTo('nosotros')">Nosotros</a>
+    <a href="https://www.instagram.com/alma.digital.ok" target="_blank" title="Instagram" style="display:flex;align-items:center;color:var(--gray-light);transition:color 0.3s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-light)'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+    </a>
+  </div>
+  <button class="cart-btn" onclick="toggleCart()">
+    🛒 Carrito
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-in fade-in-1">Arte que se adhiere a tu vida</div>
+    <h1 class="fade-in fade-in-2">Cada detalle,<br><em>una obra.</em></h1>
+    <p class="hero-sub fade-in fade-in-2">Stickers, foto cuadros, vasos, ropa y regalos únicos, diseñados con intención y elaborados con precisión.</p>
+    <div class="hero-cta fade-in fade-in-3">
+      <a href="#productos" class="btn-primary" onclick="smoothTo('productos')">Ver Catálogo</a>
+      <a href="#personalizados" class="btn-ghost" onclick="smoothTo('personalizados')">Personalizados</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Scroll</div>
+</section>
+
+<!-- STATS -->
+<section style="padding: 60px 48px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num">7</div><div class="stat-label">Categorías</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Diseños posibles</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Personalizado</div></div>
+    <div class="stat"><div class="stat-num">💬</div><div class="stat-label">WhatsApp directo</div></div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section id="productos">
+  <div class="section-header">
+    <div class="section-eyebrow">Nuestro catálogo</div>
+    <h2 class="section-title">Productos <em>Seleccionados</em></h2>
+  </div>
+  <div class="products-grid" id="productsGrid">
+    <!-- Rendered by JS -->
+  </div>
+</section>
+
+<!-- PERSONALIZADOS -->
+<section class="custom-section" id="personalizados">
+  <div class="custom-grid">
+    <div>
+      <div class="section-header" style="margin-bottom:48px">
+        <div class="section-eyebrow">Servicio especial</div>
+        <h2 class="section-title">Diseño <em>Personalizado</em></h2>
+      </div>
+      <p style="font-size:12px;color:var(--gray-light);line-height:2;margin-bottom:32px">
+        ¿Tenés una idea? La hacemos realidad. Subí tu imagen o describí tu diseño y nos comunicamos para darte el presupuesto ideal.
+      </p>
+      <div class="custom-form">
+        <div class="form-group">
+          <label class="form-label">Tu nombre</label>
+          <input type="text" class="form-input" id="customName" placeholder="Nombre completo">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de producto</label>
+          <select class="form-select" id="customProduct">
+            <option value="">Seleccioná un producto</option>
+            <option>Stickers personalizados</option>
+            <option>Foto Cuadro</option>
+            <option>Vaso Souvenir</option>
+            <option>Mazo de Cartas</option>
+            <option>Botella Personalizada</option>
+            <option>Ropa Personalizada</option>
+            <option>Regalo Personalizado</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descripción del diseño</label>
+          <textarea class="form-textarea" id="customDesc" placeholder="Contanos tu idea..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subir imágenes de referencia</label>
+          <div class="upload-area" id="uploadArea" onclick="document.getElementById('uploadInput').click()">
+            <input type="file" id="uploadInput" multiple accept="image/*" onchange="handleUpload(event)">
+            <div class="upload-icon">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+              </svg>
+            </div>
+            <div class="upload-text">Arrastrá o hacé click para subir</div>
+            <div class="upload-sub">JPG, PNG, GIF hasta 10MB</div>
+            <div class="upload-preview" id="uploadPreview"></div>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="sendCustomOrder()" style="align-self:flex-start">
+          Enviar por WhatsApp →
+        </button>
+      </div>
+    </div>
+    <div class="custom-visual">
+      <div class="custom-visual-inner">
+        <div class="custom-visual-deco">★</div>
+        <div class="custom-visual-text">
+          Tu visión,<br>
+          <em>tu producto.</em>
+          <span class="gold-line" style="margin:16px auto;"></span>
+          <span style="font-size:12px;font-family:'Montserrat',sans-serif;font-weight:200;letter-spacing:2px;color:var(--gray-light)">Diseños únicos desde $0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section id="nosotros" style="border-top:1px solid var(--border)">
+  <div style="max-width:600px">
+    <div class="section-eyebrow">Nuestra historia</div>
+    <h2 class="section-title" style="margin-bottom:32px">Sobre <em>Alma Digital</em></h2>
+    <p style="font-size:13px;color:var(--gray-light);line-height:2.2;margin-bottom:24px">
+      Somos una marca dedicada a crear objetos con alma. Cada sticker, cada vaso, cada regalo lleva consigo una intención: que lo que usás cuente algo sobre vos.
+    </p>
+    <p style="font-size:13px;color:var(--gray-light);line-height:2.2">
+      Trabajamos con materiales de calidad y atención al detalle en cada pedido. Tu diseño, tu estilo, nuestra precisión.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">Alma <span>Digital</span></span>
+      <p class="footer-tagline">Arte aplicado a tu vida cotidiana. Stickers, personalizados y regalos únicos.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Catálogo</div>
+      <div class="footer-links">
+        <a class="footer-link" href="#productos" onclick="smoothTo('productos')">Stickers</a>
+        <a class="footer-link" href="#productos" onclick="smoothTo('productos')">Foto Cuadros</a>
+        <a class="footer-link" href="#productos" onclick="smoothTo('productos')">Vasos Souvenir</a>
+        <a class="footer-link" href="#personalizados" onclick="smoothTo('personalizados')">Personalizados</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <div class="footer-links">
+        <a class="footer-link" href="https://wa.me/5491158482810" target="_blank">WhatsApp</a>
+        <a class="footer-link" href="https://www.instagram.com/alma.digital.ok" target="_blank" style="display:flex;align-items:center;gap:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          @alma.digital.ok
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Alma Digital — Todos los derechos reservados</div>
+    <div class="footer-copy" style="color:var(--gold)">Hecho con amor ✦</div>
+  </div>
+</footer>
+
+<!-- ADMIN TRIGGER -->
+<button class="admin-trigger" onclick="showLogin()" title="Admin">⚙</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <div class="cart-title">Tu carrito</div>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <div class="cart-empty-text">Tu carrito está vacío</div>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <div class="cart-total-label">Total</div>
+      <div class="cart-total-val" id="cartTotal">$0</div>
+    </div>
+    <button class="whatsapp-btn" onclick="sendCartWhatsApp()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Pedir por WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-grid">
+      <div class="modal-img" id="modalImg"></div>
+      <div class="modal-body" style="position:relative">
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+        <div class="modal-cat" id="modalCat"></div>
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn-primary" onclick="addFromModal()">Agregar al carrito</button>
+          <button class="btn-ghost" onclick="closeModalDirect()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="login-overlay" id="loginOverlay" style="display:none">
+  <div class="login-box">
+    <div class="login-logo">Alma <span>Digital</span></div>
+    <div class="login-title">Acceso Administrador</div>
+    <input type="password" class="admin-input" id="adminPwd" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkLogin()" style="cursor:text">
+    <button class="btn-primary" style="width:100%" onclick="checkLogin()">Ingresar</button>
+    <div class="login-error" id="loginError">Contraseña incorrecta</div>
+    <div style="text-align:center;margin-top:20px">
+      <button onclick="document.getElementById('loginOverlay').style.display='none'" style="background:none;border:none;color:var(--gray-light);font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-nav">
+    <div class="admin-logo">Alma <span>Digital</span> — <span style="font-size:12px;letter-spacing:2px">Admin</span></div>
+    <div style="display:flex;gap:12px">
+      <button class="admin-btn-sm admin-btn-outline" onclick="saveProducts()">Guardar cambios</button>
+      <button class="admin-btn-sm admin-btn-danger" onclick="closeAdmin()">Salir</button>
+    </div>
+  </div>
+  <div class="admin-content">
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="showAdminTab('products', this)">Productos</button>
+      <button class="admin-tab" onclick="showAdminTab('settings', this)">Configuración</button>
+    </div>
+
+    <div class="admin-tab-content active" id="admin-products">
+      <div style="margin-bottom:32px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:4px">Gestión de Productos</div>
+          <div style="font-size:10px;color:var(--gray-light);letter-spacing:2px">Editá precios, imágenes y descripciones</div>
+        </div>
+        <button class="admin-btn-sm admin-btn-gold" onclick="addNewProduct()">+ Nuevo producto</button>
+      </div>
+      <div class="admin-grid" id="adminProductsGrid"></div>
+    </div>
+
+    <div class="admin-tab-content" id="admin-settings">
+      <div style="max-width:500px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:32px">Configuración General</div>
+
+        <div style="background:var(--black);border:1px solid var(--border);padding:20px;margin-bottom:28px">
+          <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">☁ Cloudflare R2 — Imágenes</div>
+          <div class="form-group" style="margin-bottom:12px">
+            <label class="form-label">URL del Worker</label>
+            <input type="text" class="admin-input" id="workerUrl" placeholder="https://alma-digital-images.tuusuario.workers.dev">
+          </div>
+          <div class="form-group" style="margin-bottom:12px">
+            <label class="form-label">Clave Admin (ADMIN_KEY del Worker)</label>
+            <input type="password" class="admin-input" id="workerKey" placeholder="Tu clave secreta del Worker">
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="admin-btn-sm admin-btn-gold" onclick="saveCloudflareSettings()">Guardar</button>
+            <button class="admin-btn-sm admin-btn-outline" onclick="testWorker()">Probar conexión</button>
+            <span id="workerStatus" style="font-size:10px;letter-spacing:1px"></span>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:20px">
+          <label class="form-label">Contraseña Admin</label>
+          <input type="password" class="admin-input" id="newPassword" placeholder="Nueva contraseña">
+          <button class="admin-btn-sm admin-btn-gold" onclick="changePassword()" style="margin-top:8px">Cambiar contraseña</button>
+        </div>
+        <div class="form-group" style="margin-bottom:20px">
+          <label class="form-label">Número de WhatsApp</label>
+          <input type="text" class="admin-input" id="waNumber" value="5491158482810">
+        </div>
+        <div class="form-group" style="margin-bottom:20px">
+          <label class="form-label">Mensaje de bienvenida (carrito)</label>
+          <textarea class="admin-input" id="waMessage" rows="3" style="resize:vertical">Hola! Te hago un pedido desde Alma Digital 🌟</textarea>
+        </div>
+        <button class="admin-btn-sm admin-btn-gold" onclick="saveSettings()">Guardar configuración</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== DATA ==========
+const defaultProducts = [
+  { id: 1, name: 'Sticker Pack Vol.1', cat: 'Stickers', price: 1500, desc: 'Pack de 10 stickers premium con acabado UV. Resistentes al agua y la luz solar.', img: '', badge: 'Más vendido' },
+  { id: 2, name: 'Sticker Individual', cat: 'Stickers', price: 300, desc: 'Sticker individual de alta resolución. Medidas a elección.', img: '', badge: '' },
+  { id: 3, name: 'Foto Cuadro', cat: 'Foto Cuadro', price: 4500, desc: 'Impresión de alta calidad sobre lienzo estirado. Disponible en varios tamaños.', img: '', badge: '' },
+  { id: 4, name: 'Vaso Souvenir Personalizado', cat: 'Vasos', price: 2800, desc: 'Vaso de vidrio templado con diseño sublimado permanente. Apto lavavajillas.', img: '', badge: 'Personalizable' },
+  { id: 5, name: 'Mazo de Cartas', cat: 'Cartas', price: 5500, desc: 'Mazo completo de 54 cartas personalizadas con tu diseño o fotografías.', img: '', badge: '' },
+  { id: 6, name: 'Botella Personalizada', cat: 'Botellas', price: 3200, desc: 'Botella reutilizable con serigrafía o vinilo de alta calidad.', img: '', badge: '' },
+  { id: 7, name: 'Estampado para Ropa', cat: 'Ropa', price: 1800, desc: 'Transfer premium o serigrafía directa. Compatible con algodón y polycotton.', img: '', badge: '' },
+  { id: 8, name: 'Regalo Personalizado', cat: 'Regalos', price: 6000, desc: 'Caja regalo armada con productos personalizados a tu elección.', img: '', badge: 'Popular' },
+];
+
+let products = JSON.parse(localStorage.getItem('alma_products') || 'null') || defaultProducts;
+let cart = [];
+let currentModal = null;
+let adminPassword = localStorage.getItem('alma_admin_pwd') || 'alma2024';
+let waNumber = localStorage.getItem('alma_wa') || '5491158482810';
+let waMessage = localStorage.getItem('alma_wamsg') || 'Hola! Te hago un pedido desde Alma Digital 🌟';
+let workerUrl = localStorage.getItem('alma_worker_url') || '';
+let workerKey = localStorage.getItem('alma_worker_key') || '';
+
+// ========== CURSOR ==========
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px';
+  ring.style.top = e.clientY + 'px';
+});
+document.addEventListener('mouseover', e => {
+  if (e.target.closest('button,a,[onclick]')) ring.classList.add('hovered');
+  else ring.classList.remove('hovered');
+});
+
+// ========== RENDER PRODUCTS ==========
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = products.map(p => `
+    <div class="product-card" onclick="openModal(${p.id})">
+      ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+      <div class="product-img">
+        ${p.img
+          ? `<img src="${p.img}" alt="${p.name}">`
+          : `<div class="product-img-placeholder">
+              <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+              <span>Sin imagen</span>
+             </div>`}
+        <div class="product-overlay">
+          <button class="btn-primary" onclick="event.stopPropagation();addToCart(${p.id})">Agregar</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">${p.cat}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc.substring(0,80)}...</div>
+        <div class="product-footer">
+          <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
+          <button class="add-to-cart" onclick="event.stopPropagation();addToCart(${p.id})">+ Carrito</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========== CART ==========
+function addToCart(id, fromModal) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+  const existing = cart.find(i => i.id === id);
+  if (existing) existing.qty++;
+  else cart.push({ ...product, qty: 1 });
+  updateCartUI();
+  showToast(`"${product.name}" agregado al carrito`);
+  if (fromModal) closeModalDirect();
+}
+
+function addFromModal() {
+  if (currentModal) addToCart(currentModal, true);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCartUI();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) removeFromCart(id);
+  else updateCartUI();
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cartTotal').textContent = '$' + total.toLocaleString('es-AR');
+  const itemsEl = document.getElementById('cartItems');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div class="cart-empty-text">Tu carrito está vacío</div></div>';
+  } else {
+    itemsEl.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-img">
+          ${item.img ? `<img src="${item.img}" alt="${item.name}">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:24px">🏷️</div>`}
+        </div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-variant">${item.cat}</div>
+          <div class="cart-item-price">$${(item.price * item.qty).toLocaleString('es-AR')}</div>
+          <div class="cart-item-controls">
+            <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+            <button class="remove-item" onclick="removeFromCart(${item.id})">🗑</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function toggleCart() {
+  document.getElementById('cartOverlay').classList.toggle('open');
+  document.getElementById('cartSidebar').classList.toggle('open');
+}
+
+function sendCartWhatsApp() {
+  if (cart.length === 0) { showToast('Tu carrito está vacío'); return; }
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  let msg = waMessage + '\n\n';
+  msg += '📦 *MI PEDIDO:*\n\n';
+  cart.forEach(item => {
+    msg += `▸ ${item.name} × ${item.qty} — $${(item.price * item.qty).toLocaleString('es-AR')}\n`;
+  });
+  msg += `\n💰 *Total: $${total.toLocaleString('es-AR')}*`;
+  const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+// ========== MODAL ==========
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  currentModal = id;
+  document.getElementById('modalCat').textContent = p.cat;
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalPrice').textContent = '$' + p.price.toLocaleString('es-AR');
+  document.getElementById('modalDesc').textContent = p.desc;
+  document.getElementById('modalImg').innerHTML = p.img
+    ? `<img src="${p.img}" alt="${p.name}">`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--gray-light)"><svg width="64" height="64" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span style="font-size:10px;letter-spacing:2px;text-transform:uppercase">Sin imagen</span></div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target.id === 'modalOverlay') closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  currentModal = null;
+}
+
+// ========== CUSTOM ORDER ==========
+let uploadedFiles = [];
+
+function handleUpload(e) {
+  const files = Array.from(e.target.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      uploadedFiles.push({ name: file.name, data: ev.target.result });
+      renderUploadPreview();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderUploadPreview() {
+  const preview = document.getElementById('uploadPreview');
+  preview.innerHTML = uploadedFiles.map((f, i) =>
+    `<img class="upload-thumb" src="${f.data}" title="${f.name}">`
+  ).join('');
+}
+
+function sendCustomOrder() {
+  const name = document.getElementById('customName').value.trim();
+  const product = document.getElementById('customProduct').value;
+  const desc = document.getElementById('customDesc').value.trim();
+  if (!name || !product || !desc) { showToast('Completá todos los campos'); return; }
+  let msg = `Hola! Quiero consultar sobre un diseño personalizado 🎨\n\n`;
+  msg += `👤 *Nombre:* ${name}\n`;
+  msg += `📦 *Producto:* ${product}\n`;
+  msg += `✏️ *Descripción:* ${desc}\n`;
+  if (uploadedFiles.length > 0) msg += `\n🖼️ *Imágenes adjuntas:* ${uploadedFiles.length} archivo(s) (te las mando por aquí)`;
+  const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+// ========== ADMIN ==========
+function showLogin() {
+  document.getElementById('loginOverlay').style.display = 'flex';
+  document.getElementById('adminPwd').value = '';
+  document.getElementById('loginError').style.display = 'none';
+  setTimeout(() => document.getElementById('adminPwd').focus(), 100);
+}
+
+function checkLogin() {
+  const pwd = document.getElementById('adminPwd').value;
+  if (pwd === adminPassword) {
+    document.getElementById('loginOverlay').style.display = 'none';
+    openAdmin();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('adminPwd').value = '';
+  }
+}
+
+function openAdmin() {
+  document.getElementById('adminPanel').classList.add('open');
+  renderAdminProducts();
+  document.getElementById('waNumber').value = waNumber;
+  document.getElementById('waMessage').value = waMessage;
+  document.getElementById('workerUrl').value = workerUrl;
+  document.getElementById('workerKey').value = workerKey;
+}
+
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.remove('open');
+}
+
+function renderAdminProducts() {
+  const grid = document.getElementById('adminProductsGrid');
+  grid.innerHTML = products.map(p => `
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <div class="admin-card-title">${p.name}</div>
+        <div class="admin-card-actions">
+          <button class="admin-btn-sm admin-btn-danger" onclick="deleteProduct(${p.id})">🗑</button>
+        </div>
+      </div>
+      <div class="admin-img-upload" onclick="triggerImgUpload(${p.id})" title="Cambiar imagen">
+        <input type="file" id="img_${p.id}" accept="image/*" onchange="updateProductImg(${p.id}, event)" style="display:none">
+        ${p.img
+          ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">`
+          : `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--gray-light)"><svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg><span style="font-size:9px;letter-spacing:2px;text-transform:uppercase">Subir imagen</span></div>`}
+      </div>
+      <input class="admin-input" type="text" value="${p.name}" oninput="updateField(${p.id},'name',this.value)" placeholder="Nombre">
+      <input class="admin-input" type="text" value="${p.cat}" oninput="updateField(${p.id},'cat',this.value)" placeholder="Categoría">
+      <input class="admin-input" type="number" value="${p.price}" oninput="updateField(${p.id},'price',+this.value)" placeholder="Precio">
+      <input class="admin-input" type="text" value="${p.badge}" oninput="updateField(${p.id},'badge',this.value)" placeholder="Badge (ej: Más vendido)">
+      <textarea class="admin-input" oninput="updateField(${p.id},'desc',this.value)" placeholder="Descripción" rows="3">${p.desc}</textarea>
+    </div>
+  `).join('') + `
+    <button class="admin-add-product" onclick="addNewProduct()">
+      <div class="admin-add-icon">+</div>
+      <div class="admin-add-text">Agregar producto</div>
+    </button>
+  `;
+}
+
+function triggerImgUpload(id) {
+  document.getElementById(`img_${id}`).click();
+}
+
+async function updateProductImg(id, e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  // Si hay Worker configurado, subir a R2
+  if (workerUrl && workerKey) {
+    showToast('Subiendo imagen...');
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await fetch(`${workerUrl}/upload`, {
+        method: 'POST',
+        headers: { 'X-Admin-Key': workerKey },
+        body: formData
+      });
+      if (!res.ok) throw new Error('Error ' + res.status);
+      const data = await res.json();
+      updateField(id, 'img', data.url);
+      updateField(id, 'imgKey', data.key);
+      renderAdminProducts();
+      showToast('Imagen subida a Cloudflare R2 ✓');
+      return;
+    } catch (err) {
+      showToast('Error R2: ' + err.message + ' — guardando local');
+    }
+  }
+
+  // Fallback: base64 local
+  const reader = new FileReader();
+  reader.onload = ev => {
+    updateField(id, 'img', ev.target.result);
+    renderAdminProducts();
+    showToast('Imagen guardada localmente');
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateField(id, field, value) {
+  const p = products.find(x => x.id === id);
+  if (p) p[field] = value;
+}
+
+function deleteProduct(id) {
+  if (!confirm('¿Eliminár este producto?')) return;
+  products = products.filter(p => p.id !== id);
+  renderAdminProducts();
+  showToast('Producto eliminado');
+}
+
+function addNewProduct() {
+  const newId = Date.now();
+  products.push({
+    id: newId, name: 'Nuevo Producto', cat: 'Sin categoría',
+    price: 0, desc: 'Descripción del producto.', img: '', badge: ''
+  });
+  renderAdminProducts();
+  showToast('Producto agregado');
+}
+
+function saveProducts() {
+  localStorage.setItem('alma_products', JSON.stringify(products));
+  renderProducts();
+  showToast('Cambios guardados ✓');
+}
+
+function showAdminTab(tab, el) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('admin-' + tab).classList.add('active');
+}
+
+function changePassword() {
+  const np = document.getElementById('newPassword').value;
+  if (!np || np.length < 4) { showToast('Mínimo 4 caracteres'); return; }
+  adminPassword = np;
+  localStorage.setItem('alma_admin_pwd', np);
+  document.getElementById('newPassword').value = '';
+  showToast('Contraseña actualizada ✓');
+}
+
+function saveSettings() {
+  waNumber = document.getElementById('waNumber').value.trim();
+  waMessage = document.getElementById('waMessage').value.trim();
+  localStorage.setItem('alma_wa', waNumber);
+  localStorage.setItem('alma_wamsg', waMessage);
+  showToast('Configuración guardada ✓');
+}
+
+function saveCloudflareSettings() {
+  workerUrl = document.getElementById('workerUrl').value.trim().replace(/\/$/, '');
+  workerKey = document.getElementById('workerKey').value.trim();
+  localStorage.setItem('alma_worker_url', workerUrl);
+  localStorage.setItem('alma_worker_key', workerKey);
+  showToast('Cloudflare guardado ✓');
+}
+
+async function testWorker() {
+  const url = document.getElementById('workerUrl').value.trim().replace(/\/$/, '');
+  const key = document.getElementById('workerKey').value.trim();
+  const status = document.getElementById('workerStatus');
+  if (!url) { status.textContent = '⚠ Ingresá la URL'; status.style.color = '#e57373'; return; }
+  status.textContent = 'Probando...'; status.style.color = 'var(--gray-light)';
+  try {
+    const res = await fetch(`${url}/list-images`, {
+      headers: { 'X-Admin-Key': key }
+    });
+    if (res.ok) {
+      status.textContent = '✓ Conexión OK'; status.style.color = '#81c784';
+    } else {
+      status.textContent = '✗ Error ' + res.status; status.style.color = '#e57373';
+    }
+  } catch(e) {
+    status.textContent = '✗ Sin conexión'; status.style.color = '#e57373';
+  }
+}
+
+async function deleteProductImg(id, key) {
+  if (!workerUrl || !workerKey || !key) return;
+  try {
+    await fetch(`${workerUrl}/image/${encodeURIComponent(key)}`, {
+      method: 'DELETE',
+      headers: { 'X-Admin-Key': workerKey }
+    });
+  } catch(e) { /* silencioso */ }
+}
+
+// ========== UTILS ==========
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function smoothTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  return false;
+}
+
+// Drag upload
+const uploadArea = document.getElementById('uploadArea');
+uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
+uploadArea.addEventListener('drop', e => {
+  e.preventDefault(); uploadArea.classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      uploadedFiles.push({ name: file.name, data: ev.target.result });
+      renderUploadPreview();
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+// Init
+renderProducts();
+</script>
+</body>
+</html>
